@@ -1,0 +1,1 @@
+# NICK97ResourcesIconInSearchResults
