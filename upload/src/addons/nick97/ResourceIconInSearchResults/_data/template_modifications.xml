@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="xs_copyright_footer" description="Add copyright footer" execution_order="10" enabled="0" action="str_replace">
+    <find><![CDATA[{{ phrase('extra_copyright') }}]]></find>
+    <replace><![CDATA[$0  <a href="https://cities-mods.com/" class="u-concealed" dir="ltr" target="_blank" style="font-size: 0;">Xenforo Add-ons and Styles<span class="copyright"> by GameNet</span></a>]]></replace>
+  </modification>
+  <modification type="public" template="search_result_resource" modification_key="search_result_resource" description="fix Resource Icon size (This is if you install XenMax Resource Icon)" execution_order="40" enabled="1" action="str_replace">
+    <find><![CDATA[{{ resource_icon($resource, 's', link('resources', $resource)) }}]]></find>
+    <replace><![CDATA[{{ xm_icon($resource, 's', link('resources', $resource)) }}]]></replace>
+  </modification>
+  <modification type="public" template="search_result_resource" modification_key="xm_resouceiconinsearch" description="Replace resource icon instead of avatar" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[<li class="block-row block-row--separated {{ $resource.isIgnored() ? 'is-ignored' : '' }} js-inlineModContainer" data-author="{{ $resource.User.username ?: $resource.username }}">
+	<div class="contentRow {{ !$resource.isVisible() ? 'is-deleted' : '' }}">
+		<span class="contentRow-figure">
+			<xf:avatar user="{$resource.User}" size="s" defaultname="{$resource.username}" />
+		</span>
+		<div class="contentRow-main">
+			<h3 class="contentRow-title">
+				<a href="{{ link('resources', $resource) }}">{{ prefix('resource', $resource) }}{{ highlight($resource.title, $options.term) }}</a>
+				<xf:if is="$resource.isVersioned()">
+					<span class="u-muted">{$resource.CurrentVersion.version_string}</span>
+				</xf:if>
+			</h3>
+
+			<div class="contentRow-snippet">{{ snippet($resource.Description.message, 300, {'term': $options.term, 'stripQuote': true}) }}</div>
+
+			<div class="contentRow-minor contentRow-minor--hideLinks">
+				<ul class="listInline listInline--bullet">
+					<xf:if is="$options.mod == 'resource' && $resource.canUseInlineModeration()">
+						<li><xf:checkbox standalone="true"><xf:option value="{$resource.resource_id}" class="js-inlineModToggle" /></xf:checkbox></li>
+					</xf:if>
+					<li><xf:username user="{$resource.User}" defaultname="{$resource.username}" /></li>
+					<li>{{ phrase('xfrm_resource') }}</li>
+					<li><xf:date time="{$resource.resource_date}" /></li>
+					<li>{{ phrase('category:') }} <a href="{{ link('resources/categories', $resource.Category) }}">{$resource.Category.title}</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</li>]]></find>
+    <replace><![CDATA[<xf:css src="structured_list.less" />
+	<xf:css src="xfrm.less" />
+	<div class="structItem structItem--resource {{ $resource.prefix_id ? 'is-prefix' . $resource.prefix_id : '' }} {{ $resource.isIgnored() ? 'is-ignored' : '' }}{{ $resource.resource_state == 'moderated' ? 'is-moderated' : '' }}{{ $resource.resource_state == 'deleted' ? 'is-deleted' : '' }} js-inlineModContainer js-resourceListItem-{$resource.resource_id}" data-author="{{ $resource.User.username ?: $resource.username }}">
+		<div class="structItem-cell structItem-cell--icon structItem-cell--iconExpanded">
+			<div class="structItem-iconContainer">
+				<xf:if is="$xf.options.xfrmAllowIcons">
+					{{ resource_icon($resource, 's', link('resources', $resource)) }}
+				<xf:avatar user="$resource.User" size="s"
+					href=""
+					class="avatar--separated structItem-secondaryIcon" />
+				<xf:else />
+					<xf:avatar user="$resource.User" size="s" defaultname="{$resource.username}" />
+				</xf:if>
+			</div>
+		</div>
+		<div class="structItem-cell structItem-cell--main" data-xf-init="touch-proxy">
+			<xf:if contentcheck="true">
+				<ul class="structItem-statuses">
+				<xf:contentcheck>
+					<xf:if is="$resource.Featured">
+						<li>
+							<i class="structItem-status structItem-status--attention" aria-hidden="true" title="{{ phrase('xfrm_featured')|for_attr }}"></i>
+							<span class="u-srOnly">{{ phrase('xfrm_featured') }}</span>
+						</li>
+					</xf:if>
+					<xf:if is="$resource.resource_state == 'moderated'">
+						<li>
+							<i class="structItem-status structItem-status--moderated" aria-hidden="true" title="{{ phrase('awaiting_approval')|for_attr }}"></i>
+							<span class="u-srOnly">{{ phrase('awaiting_approval') }}</span>
+						</li>
+					</xf:if>
+					<xf:if is="$resource.resource_state == 'deleted'">
+						<li>
+							<i class="structItem-status structItem-status--deleted" aria-hidden="true" title="{{ phrase('deleted')|for_attr }}"></i>
+							<span class="u-srOnly">{{ phrase('deleted') }}</span>
+						</li>
+					</xf:if>
+					<xf:if is="{$showWatched} AND {$xf.visitor.user_id}">
+						<xf:if is="{$resource.Watch.{$xf.visitor.user_id}}">
+							<li>
+								<i class="structItem-status structItem-status--watched" aria-hidden="true" title="{{ phrase('xfrm_resource_watched')|for_attr }}"></i>
+								<span class="u-srOnly">{{ phrase('xfrm_resource_watched') }}</span>
+							</li>
+						<xf:elseif is="!$category AND {$resource.Category.Watch.{$xf.visitor.user_id}}" />
+							<li>
+								<i class="structItem-status structItem-status--watched" aria-hidden="true" title="{{ phrase('xfrm_category_watched')|for_attr }}"></i>
+								<span class="u-srOnly">{{ phrase('xfrm_category_watched') }}</span>
+							</li>
+						</xf:if>
+					</xf:if>
+				</xf:contentcheck>
+				</ul>
+			</xf:if>
+
+			<div class="structItem-title">
+				<xf:if is="$resource.prefix_id">
+					<xf:if is="$category">
+						<a href="{{ link('resources/categories', $category, {'prefix_id': $resource.prefix_id}) }}" class="labelLink" rel="nofollow">{{ prefix('resource', $resource, 'html', '') }}</a>
+					<xf:else />
+						<xf:if is="$filterPrefix">
+							<a href="{{ link('resources', null, {'prefix_id': $resource.prefix_id}) }}" class="labelLink" rel="nofollow">{{ prefix('resource', $resource, 'html', '') }}</a>
+						<xf:else />
+							{{ prefix('resource', $resource, 'html', '') }}
+						</xf:if>
+					</xf:if>
+				</xf:if>
+				<a href="{{ link('resources', $resource) }}" class="" data-tp-primary="on">{$resource.title}</a>
+				<xf:if is="$resource.isVersioned()">
+					<span class="u-muted">{$resource.CurrentVersion.version_string}</span>
+				</xf:if>
+				<xf:if is="$resource.isExternalPurchasable()">
+					<span class="label label--primary label--smallest">{$resource.price|currency($resource.currency)}</span>
+				</xf:if>
+			</div>
+
+			<div class="structItem-minor">
+				<xf:if contentcheck="true">
+					<ul class="structItem-extraInfo">
+					<xf:contentcheck>
+						<xf:if is="{$extraInfo}">
+							<li>{$extraInfo}</li>
+						</xf:if>
+						<xf:if is="$chooseName">
+							<li><xf:checkbox standalone="true">
+								<xf:option name="{$chooseName}[]" value="{$resource.resource_id}" class="js-chooseItem" />
+							</xf:checkbox></li>
+						<xf:elseif is="$allowInlineMod AND $resource.canUseInlineModeration()" />
+							<li><xf:checkbox standalone="true"><xf:option value="{$resource.resource_id}"
+								class="js-inlineModToggle"
+								data-xf-init="tooltip" title="{{ phrase('select_for_moderation') }}" /></xf:checkbox></li>
+						</xf:if>
+					</xf:contentcheck>
+					</ul>
+				</xf:if>
+
+				<xf:if is="$resource.resource_state == 'deleted'">
+					<xf:if is="{$extraInfo}"><span class="structItem-extraInfo">{$extraInfo}</span></xf:if>
+
+					<xf:macro template="deletion_macros" name="notice" arg-log="{$resource.DeletionLog}" />
+				<xf:else />
+					<ul class="structItem-parts">
+						<li><xf:username user="$resource.User" defaultname="{$resource.username}" /></li>
+						<li class="structItem-startDate"><a href="{{ link('resources', $resource) }}" rel="nofollow"><xf:date time="{$resource.resource_date}" /></a></li>
+						<xf:if is="!$category OR $category.hasChildren()">
+							<li><a href="{{ link('resources/categories', $resource.Category) }}">{$resource.Category.title}</a></li>
+						</xf:if>
+					</ul>
+				</xf:if>
+			</div>
+
+			<xf:if is="$resource.resource_state != 'deleted'">
+				<div class="structItem-resourceTagLine">{$resource.tag_line}</div>
+			</xf:if>
+		</div>
+		<div class="structItem-cell structItem-cell--resourceMeta">
+			<div class="structItem-metaItem  structItem-metaItem--rating">
+			<xf:set var="$addOnId" value="XFA/RMDownloadFromList" />
+			<xf:if is="{$xf.addOns.{$addOnId}}">
+    			 <xf:macro
+					template="xfa_rmdfl_macros" 
+					name="download_button"
+					arg-resource="{$resource}" 
+				/>
+			</xf:if>
+				<xf:macro template="rating_macros" name="stars_text"
+					arg-rating="{$resource.rating_avg}"
+					arg-count="{$resource.rating_count}"
+					arg-rowClass="ratingStarsRow--justified"
+					arg-starsClass="ratingStars--larger" />
+			</div>
+
+			<xf:if is="$resource.isDownloadable()">
+				<dl class="pairs pairs--justified structItem-minor structItem-metaItem structItem-metaItem--downloads">
+					<dt>{{ phrase('xfrm_downloads') }}</dt>
+					<dd>{$resource.download_count|number}</dd>
+				</dl>
+ 
+			<xf:set var="$addOnId" value="XFRM" />
+			<xf:if is="{$xf.addOns.{$addOnId}}">
+				</xf:if>
+				<dl class="pairs pairs--justified">
+				<dt>{{ phrase('views') }}</dt>
+				<dd>{{ max($resource.view_count, $resource.download_count, 1)|number_short }}</dd>
+			</dl>
+			</xf:if>
+			<dl class="pairs pairs--justified structItem-minor structItem-metaItem structItem-metaItem--lastUpdate">
+				<dt>{{ phrase('updated') }}</dt>
+				<dd><a href="{{ link('resources/updates', $resource) }}" class="u-concealed"><xf:date time="{$resource.last_update}" /></a></dd>
+			</dl>
+		</div>
+	</div>]]></replace>
+  </modification>
+  <modification type="public" template="search_result_resource_update" modification_key="search_result_resource_update" description="fix Resource Icon size (This is if you install XenMax Resource Icon)" execution_order="50" enabled="1" action="str_replace">
+    <find><![CDATA[{{ resource_icon($resource, 's', link('resources', $resource)) }}]]></find>
+    <replace><![CDATA[{{ xm_icon($resource, 's', link('resources', $resource)) }}]]></replace>
+  </modification>
+  <modification type="public" template="search_result_resource_update" modification_key="xm_resouceiconinsearch_update" description="Add resource icon instead of avatar (Updates)" execution_order="30" enabled="1" action="str_replace">
+    <find><![CDATA[<li class="block-row block-row--separated {{ $resource.isIgnored() ? 'is-ignored' : '' }} js-inlineModContainer" data-author="{{ $resource.User.username ?: $resource.username }}">
+	<div class="contentRow {{ !$update.isVisible() ? 'is-deleted' : '' }}">
+		<span class="contentRow-figure">
+			<xf:avatar user="{$resource.User}" size="s" defaultname="{$resource.username}" />
+		</span>
+		<div class="contentRow-main">
+			<h3 class="contentRow-title">
+				<a href="{{ link('resources/update', $update) }}">{{ prefix('resource', $resource) }}{$resource.title} - {{ highlight($update.title, $options.term) }}</a>
+			</h3>
+
+			<div class="contentRow-snippet">{{ snippet($update.message, 300, {'term': $options.term, 'stripQuote': true}) }}</div>
+
+			<div class="contentRow-minor contentRow-minor--hideLinks">
+				<ul class="listInline listInline--bullet">
+					<li><xf:username user="{$resource.User}" defaultname="{$resource.username}" /></li>
+					<li>{{ phrase('xfrm_resource_update') }}</li>
+					<li><xf:date time="{$update.post_date}" /></li>
+					<li>{{ phrase('category:') }} <a href="{{ link('resources/categories', $resource.Category) }}">{$resource.Category.title}</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</li>]]></find>
+    <replace><![CDATA[<xf:css src="structured_list.less" />
+	<xf:css src="xfrm.less" />
+	<div class="structItem structItem--resource {{ $resource.prefix_id ? 'is-prefix' . $resource.prefix_id : '' }} {{ $resource.isIgnored() ? 'is-ignored' : '' }}{{ $resource.resource_state == 'moderated' ? 'is-moderated' : '' }}{{ $resource.resource_state == 'deleted' ? 'is-deleted' : '' }} js-inlineModContainer js-resourceListItem-{$resource.resource_id}" data-author="{{ $resource.User.username ?: $resource.username }}">
+		<div class="structItem-cell structItem-cell--icon structItem-cell--iconExpanded">
+			<div class="structItem-iconContainer">
+				<xf:if is="$xf.options.xfrmAllowIcons">
+					{{ resource_icon($resource, 's', link('resources', $resource)) }}
+				<xf:avatar user="$resource.User" size="s"
+					href=""
+					class="avatar--separated structItem-secondaryIcon" />
+				<xf:else />
+					<xf:avatar user="$resource.User" size="s" defaultname="{$resource.username}" />
+				</xf:if>
+			</div>
+		</div>
+		<div class="structItem-cell structItem-cell--main" data-xf-init="touch-proxy">
+			<xf:if contentcheck="true">
+				<ul class="structItem-statuses">
+				<xf:contentcheck>
+					<xf:if is="$resource.Featured">
+						<li>
+							<i class="structItem-status structItem-status--attention" aria-hidden="true" title="{{ phrase('xfrm_featured')|for_attr }}"></i>
+							<span class="u-srOnly">{{ phrase('xfrm_featured') }}</span>
+						</li>
+					</xf:if>
+					<xf:if is="$resource.resource_state == 'moderated'">
+						<li>
+							<i class="structItem-status structItem-status--moderated" aria-hidden="true" title="{{ phrase('awaiting_approval')|for_attr }}"></i>
+							<span class="u-srOnly">{{ phrase('awaiting_approval') }}</span>
+						</li>
+					</xf:if>
+					<xf:if is="$resource.resource_state == 'deleted'">
+						<li>
+							<i class="structItem-status structItem-status--deleted" aria-hidden="true" title="{{ phrase('deleted')|for_attr }}"></i>
+							<span class="u-srOnly">{{ phrase('deleted') }}</span>
+						</li>
+					</xf:if>
+					<xf:if is="{$showWatched} AND {$xf.visitor.user_id}">
+						<xf:if is="{$resource.Watch.{$xf.visitor.user_id}}">
+							<li>
+								<i class="structItem-status structItem-status--watched" aria-hidden="true" title="{{ phrase('xfrm_resource_watched')|for_attr }}"></i>
+								<span class="u-srOnly">{{ phrase('xfrm_resource_watched') }}</span>
+							</li>
+						<xf:elseif is="!$category AND {$resource.Category.Watch.{$xf.visitor.user_id}}" />
+							<li>
+								<i class="structItem-status structItem-status--watched" aria-hidden="true" title="{{ phrase('xfrm_category_watched')|for_attr }}"></i>
+								<span class="u-srOnly">{{ phrase('xfrm_category_watched') }}</span>
+							</li>
+						</xf:if>
+					</xf:if>
+				</xf:contentcheck>
+				</ul>
+			</xf:if>
+
+			<div class="structItem-title">
+				<xf:if is="$resource.prefix_id">
+					<xf:if is="$category">
+						<a href="{{ link('resources/categories', $category, {'prefix_id': $resource.prefix_id}) }}" class="labelLink" rel="nofollow">{{ prefix('resource', $resource, 'html', '') }}</a>
+					<xf:else />
+						<xf:if is="$filterPrefix">
+							<a href="{{ link('resources', null, {'prefix_id': $resource.prefix_id}) }}" class="labelLink" rel="nofollow">{{ prefix('resource', $resource, 'html', '') }}</a>
+						<xf:else />
+							{{ prefix('resource', $resource, 'html', '') }}
+						</xf:if>
+					</xf:if>
+				</xf:if>
+				<a href="{{ link('resources', $resource) }}" class="" data-tp-primary="on">{$resource.title}</a>
+				<xf:if is="$resource.isVersioned()">
+					<span class="u-muted">{$resource.CurrentVersion.version_string}</span>
+				</xf:if>
+				<xf:if is="$resource.isExternalPurchasable()">
+					<span class="label label--primary label--smallest">{$resource.price|currency($resource.currency)}</span>
+				</xf:if>
+			</div>
+
+			<div class="structItem-minor">
+				<xf:if contentcheck="true">
+					<ul class="structItem-extraInfo">
+					<xf:contentcheck>
+						<xf:if is="{$extraInfo}">
+							<li>{$extraInfo}</li>
+						</xf:if>
+						<xf:if is="$chooseName">
+							<li><xf:checkbox standalone="true">
+								<xf:option name="{$chooseName}[]" value="{$resource.resource_id}" class="js-chooseItem" />
+							</xf:checkbox></li>
+						<xf:elseif is="$allowInlineMod AND $resource.canUseInlineModeration()" />
+							<li><xf:checkbox standalone="true"><xf:option value="{$resource.resource_id}"
+								class="js-inlineModToggle"
+								data-xf-init="tooltip" title="{{ phrase('select_for_moderation') }}" /></xf:checkbox></li>
+						</xf:if>
+					</xf:contentcheck>
+					</ul>
+				</xf:if>
+
+				<xf:if is="$resource.resource_state == 'deleted'">
+					<xf:if is="{$extraInfo}"><span class="structItem-extraInfo">{$extraInfo}</span></xf:if>
+
+					<xf:macro template="deletion_macros" name="notice" arg-log="{$resource.DeletionLog}" />
+				<xf:else />
+					<ul class="structItem-parts">
+						<li><xf:username user="$resource.User" defaultname="{$resource.username}" /></li>
+						<li class="structItem-startDate"><a href="{{ link('resources', $resource) }}" rel="nofollow"><xf:date time="{$resource.resource_date}" /></a></li>
+						<xf:if is="!$category OR $category.hasChildren()">
+							<li><a href="{{ link('resources/categories', $resource.Category) }}">{$resource.Category.title}</a></li>
+						</xf:if>
+					</ul>
+				</xf:if>
+			</div>
+
+			<xf:if is="$resource.resource_state != 'deleted'">
+				<div class="structItem-resourceTagLine">{$resource.tag_line}</div>
+			</xf:if>
+		</div>
+		<div class="structItem-cell structItem-cell--resourceMeta">
+			<div class="structItem-metaItem  structItem-metaItem--rating">
+			<xf:set var="$addOnId" value="XFA/RMDownloadFromList" />
+			<xf:if is="{$xf.addOns.{$addOnId}}">
+    			 <xf:macro
+					template="xfa_rmdfl_macros" 
+					name="download_button"
+					arg-resource="{$resource}" 
+				/>
+			</xf:if>
+				<xf:macro template="rating_macros" name="stars_text"
+					arg-rating="{$resource.rating_avg}"
+					arg-count="{$resource.rating_count}"
+					arg-rowClass="ratingStarsRow--justified"
+					arg-starsClass="ratingStars--larger" />
+			</div>
+
+			<xf:if is="$resource.isDownloadable()">
+				<dl class="pairs pairs--justified structItem-minor structItem-metaItem structItem-metaItem--downloads">
+					<dt>{{ phrase('xfrm_downloads') }}</dt>
+					<dd>{$resource.download_count|number}</dd>
+				</dl>
+ 
+			<xf:set var="$addOnId" value="XFRM" />
+			<xf:if is="{$xf.addOns.{$addOnId}}">
+				</xf:if>
+				<dl class="pairs pairs--justified">
+				<dt>{{ phrase('views') }}</dt>
+				<dd>{{ max($resource.view_count, $resource.download_count, 1)|number_short }}</dd>
+			</dl>
+			</xf:if>
+			<dl class="pairs pairs--justified structItem-minor structItem-metaItem structItem-metaItem--lastUpdate">
+				<dt>{{ phrase('updated') }}</dt>
+				<dd><a href="{{ link('resources/updates', $resource) }}" class="u-concealed"><xf:date time="{$resource.last_update}" /></a></dd>
+			</dl>
+		</div>
+	</div>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_list_macros" modification_key="xm_resource_view" description="Add resource view in search results" execution_order="15" enabled="1" action="str_replace">
+    <find><![CDATA[<dl class="pairs pairs--justified structItem-minor structItem-metaItem structItem-metaItem--downloads">
+					<dt>{{ phrase('xfrm_downloads') }}</dt>
+					<dd>{$resource.download_count|number}</dd>
+				</dl>]]></find>
+    <replace><![CDATA[<xen:if is="{$visitor.permissions.resourcePermissions.ViewResourceView}">
+<xf:if is="$resource.isDownloadable()">
+	<dl class="pairs pairs--justified structItem-minor structItem-metaItem structItem-metaItem--downloads">
+	<dt>{{ phrase('xfrm_downloads') }}</dt>
+	<dd>{$resource.download_count|number}</dd>
+</dl>
+</xf:if>
+<dl class="pairs pairs--justified">
+	<dt>{{ phrase('views') }}</dt>
+	<dd>{{ max($resource.view_count, $resource.download_count, 1)|number }}</dd>
+</dl>
+</xen:if>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="XFRM_FormatVersion" description="Adds the size and format of the file on the &quot;Download&quot; button" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[{{ phrase('download') }}]]></find>
+    <replace><![CDATA[$0
+<xf:if is="count($resource.CurrentVersion.Attachments) == 1">
+  <xf:set var="$attachment" value="{{ $resource.CurrentVersion.Attachments|first }}" />
+  (<strong>{{ $attachment.getFileSize()|file_size }}</strong> / <em>{{ $attachment.getExtension() }}</em>)
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

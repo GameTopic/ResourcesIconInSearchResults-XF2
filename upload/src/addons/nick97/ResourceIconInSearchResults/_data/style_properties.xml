@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="enable_resourceicon" group_name="nick97_resourceiconinsearch" title="Enable Resources Icon" description="If you installed xenmax resource icon" property_type="value" value_type="radio" display_order="0">
+    <value>""</value>
+  </style_property>
+</style_properties>
