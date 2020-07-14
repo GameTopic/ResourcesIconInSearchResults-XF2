@@ -6,4 +6,5 @@ Key Feature:
 - Support XenForo Resource Manager
 - Support [FC] Resource Icon
 - Support [XFA] RM Download from list
+
 Note: This Version is Only For XenForo 2.1 or newer and will not work in XenForo 2.0
