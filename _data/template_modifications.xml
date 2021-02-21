@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template_modifications>
-  <modification type="public" template="PAGE_CONTAINER" modification_key="xs_copyright_footer" description="Add copyright footer" execution_order="10" enabled="0" action="str_replace">
+  <modification type="public" template="PAGE_CONTAINER" modification_key="xs_copyright_footer" description="Add copyright information." execution_order="10" enabled="0" action="str_replace">
     <find><![CDATA[{{ phrase('extra_copyright') }}]]></find>
     <replace><![CDATA[$0  <a href="https://cities-mods.com/" class="u-concealed" dir="ltr" target="_blank" style="font-size: 0;">Xenforo Add-ons and Styles<span class="copyright"> by GameNet</span></a>]]></replace>
-  </modification>
-  <modification type="public" template="search_result_resource" modification_key="search_result_resource" description="fix Resource Icon size (This is if you install XenMax Resource Icon)" execution_order="40" enabled="1" action="str_replace">
-    <find><![CDATA[{{ resource_icon($resource, 's', link('resources', $resource)) }}]]></find>
-    <replace><![CDATA[{{ xm_icon($resource, 's', link('resources', $resource)) }}]]></replace>
   </modification>
   <modification type="public" template="search_result_resource" modification_key="xm_resouceiconinsearch" description="Replace resource icon instead of avatar" execution_order="20" enabled="1" action="str_replace">
     <find><![CDATA[<li class="block-row block-row--separated {{ $resource.isIgnored() ? 'is-ignored' : '' }} js-inlineModContainer" data-author="{{ $resource.User.username ?: $resource.username }}">
@@ -32,6 +28,14 @@
 					<li><xf:username user="{$resource.User}" defaultname="{$resource.username}" /></li>
 					<li>{{ phrase('xfrm_resource') }}</li>
 					<li><xf:date time="{$resource.resource_date}" /></li>
+					<xf:if is="$xf.options.enableTagging && $resource.tags">
+						<li>
+							<xf:macro template="tag_macros" name="simple_list"
+								arg-tags="{$resource.tags}"
+								arg-containerClass="contentRow-minor"
+								arg-highlightTerm="{{ $options.tag ?: $options.term}}" />
+						</li>
+					</xf:if>
 					<li>{{ phrase('category:') }} <a href="{{ link('resources/categories', $resource.Category) }}">{$resource.Category.title}</a></li>
 				</ul>
 			</div>
@@ -44,7 +48,7 @@
 		<div class="structItem-cell structItem-cell--icon structItem-cell--iconExpanded">
 			<div class="structItem-iconContainer">
 				<xf:if is="$xf.options.xfrmAllowIcons">
-					{{ resource_icon($resource, 's', link('resources', $resource)) }}
+					{{ xm_icon($resource, 's', link('resources', $resource)) }}
 				<xf:avatar user="$resource.User" size="s"
 					href=""
 					class="avatar--separated structItem-secondaryIcon" />
@@ -190,11 +194,7 @@
 		</div>
 	</div>]]></replace>
   </modification>
-  <modification type="public" template="search_result_resource_update" modification_key="search_result_resource_update" description="fix Resource Icon size (This is if you install XenMax Resource Icon)" execution_order="50" enabled="1" action="str_replace">
-    <find><![CDATA[{{ resource_icon($resource, 's', link('resources', $resource)) }}]]></find>
-    <replace><![CDATA[{{ xm_icon($resource, 's', link('resources', $resource)) }}]]></replace>
-  </modification>
-  <modification type="public" template="search_result_resource_update" modification_key="xm_resouceiconinsearch_update" description="Add resource icon instead of avatar (Updates)" execution_order="30" enabled="1" action="str_replace">
+  <modification type="public" template="search_result_resource_update" modification_key="xm_resouceiconinsearch_update" description="Replace resource icon instead of avatar (Updates)" execution_order="30" enabled="1" action="str_replace">
     <find><![CDATA[<li class="block-row block-row--separated {{ $resource.isIgnored() ? 'is-ignored' : '' }} js-inlineModContainer" data-author="{{ $resource.User.username ?: $resource.username }}">
 	<div class="contentRow {{ !$update.isVisible() ? 'is-deleted' : '' }}">
 		<span class="contentRow-figure">
@@ -224,7 +224,7 @@
 		<div class="structItem-cell structItem-cell--icon structItem-cell--iconExpanded">
 			<div class="structItem-iconContainer">
 				<xf:if is="$xf.options.xfrmAllowIcons">
-					{{ resource_icon($resource, 's', link('resources', $resource)) }}
+					{{ xm_icon($resource, 's', link('resources', $resource)) }}
 				<xf:avatar user="$resource.User" size="s"
 					href=""
 					class="avatar--separated structItem-secondaryIcon" />
@@ -370,7 +370,7 @@
 		</div>
 	</div>]]></replace>
   </modification>
-  <modification type="public" template="xfrm_resource_list_macros" modification_key="xm_resource_view" description="Add resource view in search results" execution_order="15" enabled="1" action="str_replace">
+  <modification type="public" template="xfrm_resource_list_macros" modification_key="xm_resource_view" description="Add resource view count in resource list" execution_order="15" enabled="1" action="str_replace">
     <find><![CDATA[<dl class="pairs pairs--justified structItem-minor structItem-metaItem structItem-metaItem--downloads">
 					<dt>{{ phrase('xfrm_downloads') }}</dt>
 					<dd>{$resource.download_count|number}</dd>
@@ -387,13 +387,5 @@
 	<dd>{{ max($resource.view_count, $resource.download_count, 1)|number }}</dd>
 </dl>
 </xen:if>]]></replace>
-  </modification>
-  <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="XFRM_FormatVersion" description="Adds the size and format of the file on the &quot;Download&quot; button" execution_order="10" enabled="1" action="preg_replace">
-    <find><![CDATA[{{ phrase('download') }}]]></find>
-    <replace><![CDATA[$0
-<xf:if is="count($resource.CurrentVersion.Attachments) == 1">
-  <xf:set var="$attachment" value="{{ $resource.CurrentVersion.Attachments|first }}" />
-  (<strong>{{ $attachment.getFileSize()|file_size }}</strong> / <em>{{ $attachment.getExtension() }}</em>)
-</xf:if>]]></replace>
   </modification>
 </template_modifications>

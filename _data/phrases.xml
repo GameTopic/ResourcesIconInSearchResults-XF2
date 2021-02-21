@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.xf_nick97_enable_search_tabs" version_id="2011000" version_string="2.2.0"><![CDATA[Enable Search Tabs]]></phrase>
+  <phrase title="option.xf_nick97_enable_search_text_box" version_id="2011000" version_string="2.2.0"><![CDATA[Enable Search Textbox]]></phrase>
+  <phrase title="option.xfrm_latest_resources" version_id="2011000" version_string="2.2.0"><![CDATA[Enable Latest Resources]]></phrase>
+  <phrase title="option.xfrm_nick97_enable_featured_resources" version_id="2011000" version_string="2.2.0"><![CDATA[Enable Featured Resources]]></phrase>
+  <phrase title="option.xfrm_resources_views" version_id="2011000" version_string="2.2.0"><![CDATA[Enable Resources View]]></phrase>
+  <phrase title="option_explain.xf_nick97_enable_search_tabs" version_id="2011000" version_string="2.2.0"><![CDATA[Enable search tabs in search results and tag results]]></phrase>
+  <phrase title="option_explain.xf_nick97_enable_search_text_box" version_id="2011000" version_string="2.2.0"><![CDATA[Enable search textbox in search results and tag results]]></phrase>
+  <phrase title="option_explain.xfrm_latest_resources" version_id="2011000" version_string="2.2.0"><![CDATA[This will enable Latest Resources In Search Results]]></phrase>
+  <phrase title="option_explain.xfrm_nick97_enable_featured_resources" version_id="2011000" version_string="2.2.0"><![CDATA[Enable featured resources in search results and tag results]]></phrase>
+  <phrase title="option_explain.xfrm_resources_views" version_id="2011000" version_string="2.2.0"><![CDATA[Enable resources view in search results and tag results]]></phrase>
+  <phrase title="style_prop.enable_resourceicon" version_id="2010000" version_string="2.1.0"><![CDATA[Enable Resources Icon]]></phrase>
+  <phrase title="style_prop_desc.enable_resourceicon" version_id="2010000" version_string="2.1.0"><![CDATA[If you installed xenmax resource icon]]></phrase>
+  <phrase title="style_prop_group.nick97_resourceiconinsearch" version_id="2010000" version_string="2.1.0"><![CDATA[[NICK97] Resources Icon In Search Results]]></phrase>
+  <phrase title="style_prop_group_desc.nick97_resourceiconinsearch" version_id="2010000" version_string="2.1.0"><![CDATA[Size, Color, background and more options that fit your needs]]></phrase>
+</phrases>
