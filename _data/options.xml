@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <options>
-  <option option_id="xf_nick97_enable_search_tabs" edit_format="onoff" data_type="boolean">
-    <default_value>1</default_value>
-    <relation group_id="searchOptions" display_order="50"/>
-  </option>
-  <option option_id="xf_nick97_enable_search_text_box" edit_format="onoff" data_type="boolean">
-    <default_value>1</default_value>
-    <relation group_id="searchOptions" display_order="40"/>
-  </option>
-  <option option_id="xfrm_latest_resources" edit_format="onoff" data_type="boolean">
-    <default_value>1</default_value>
-    <relation group_id="xfrm" display_order="2"/>
-  </option>
-  <option option_id="xfrm_nick97_enable_featured_resources" edit_format="onoff" data_type="boolean">
-    <default_value>1</default_value>
-    <relation group_id="xfrm" display_order="1100"/>
-  </option>
-  <option option_id="xfrm_resources_views" edit_format="onoff" data_type="boolean">
-    <default_value>1</default_value>
-    <relation group_id="xfrm" display_order="1"/>
+  <option option_id="n97_resourceIconInSearch_site_branding" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="n97_resourceIconInSearchResults" display_order="100"/>
   </option>
 </options>

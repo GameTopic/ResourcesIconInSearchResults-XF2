@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<code_event_listeners/>
+<code_event_listeners>
+  <listener event_id="templater_template_pre_render" execute_order="10" callback_class="nick97\ResourceIconInSearchResults\Listener" callback_method="searchResultResourcePreRender" active="1" hint="public:search_result_resource"/>
+  <listener event_id="templater_template_pre_render" execute_order="10" callback_class="nick97\ResourceIconInSearchResults\Listener" callback_method="searchResultResourcePreRender" active="1" hint="public:search_result_resource_update"/>
+</code_event_listeners>

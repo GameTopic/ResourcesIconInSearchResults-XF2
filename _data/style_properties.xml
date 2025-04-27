@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style_properties>
-  <style_property property_name="enable_resourceicon" group_name="nick97_resourceiconinsearch" title="Enable Resources Icon" description="If you installed xenmax resource icon" property_type="value" value_type="radio" display_order="0">
-    <value>""</value>
+  <style_property property_name="xfrmAllowIconsInSearchResults" group_name="nick97_resourceiconinsearch" title="Allow Icons In Search Results" description="If enabled, This icon will be displayed in search results and tag results." property_type="value" value_type="boolean" has_variations="0" display_order="1">
+    <value_parameters>1</value_parameters>
+    <value>1</value>
+  </style_property>
+  <style_property property_name="xfrmAllowRMDownloadButtonInSearchResults" group_name="nick97_resourceiconinsearch" title="Allow RM Download Button In Search Results" description="If enabled, This rm download button will be displayed in search results and tag results.&#10;&#10;Required [XFA] RM Download from list 2.0.0 or newer!" property_type="value" value_type="boolean" has_variations="0" depends_on="xfrmAllowIconsInSearchResults" display_order="2">
+    <value_parameters>0</value_parameters>
+    <value>0</value>
   </style_property>
 </style_properties>

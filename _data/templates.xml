@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="public" title="demo_featuredresources" version_id="2011000" version_string="2.1.1"><![CDATA[<xf:widget key="demofeaturedresources" /> syntax.]]></template>
+  <template type="public" title="nick97_resource_icon_search_result_resource" version_id="2020570" version_string="2.2.5"><![CDATA[<xf:css src="nick97_resource_icon_search_result_resource.less" />
+<xf:macro template="xfrm_resource_list_macros" name="resource" 
+	arg-resource="{$resource}"
+	arg-allowInlineMod="{{ false }}"/>]]></template>
+  <template type="public" title="nick97_resource_icon_search_result_resource.less" version_id="2020570" version_string="2.2.5"><![CDATA[<xf:if is="!{{ property('xfrmAllowRMDownloadButtonInSearchResults') }}">
+
+	.button--icon--download {display: none !important;}
+
+</xf:if>
+
+<xf:if is="!{{ property('xfrmAllowRMDownloadButtonInSearchResults') }}">
+
+	.button--icon--download {display: none !important;}
+
+</xf:if>]]></template>
 </templates>

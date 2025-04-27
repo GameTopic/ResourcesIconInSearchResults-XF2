@@ -2,21 +2,29 @@
     "legacy_addon_id": "resource_icon_in_search",
     "title": "[NICK97] Resource Icon In Search Results",
     "description": "Add resource icon instead of avatar in search results and tag results",
-    "version_id": 2011000,
-    "version_string": "2.2.0",
+    "version_id": 2020670,
+    "version_string": "2.2.6",
     "dev": "NICK97",
-    "dev_url": "https://gameplaycanada.weebly.com/",
-    "faq_url": "https://gameplaycanada.weebly.com/store/p338/%5BNICK97%5D_Resources_Icon_In_Search_Results_-_XF2.html#/",
-    "support_url": "https://cities-mods.com/support",
+    "dev_url": "https://tyleraustins.com/",
+    "faq_url": "https://tyleraustins.com/help/",
+    "support_url": "https://tyleraustins.com/support/",
     "extra_urls": {
         "Gaming Community": "https://cities-mods.com",
-        "Donate": "https://www.cities-mods.com/donate/"
+        "Donate": "https://wise.com/pay/me/nickb571"
     },
     "require": {
         "XFRM": [
-            2020070,
-            "XenForo Resource Manager 2.2.0 +"
+            2030070,
+            "XenForo Resource Manager 2.3.0+"
+        ],
+        "XF": [
+            2030070,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.3.0",
+            "PHP 8.3.0+"
         ]
     },
-    "icon": "fa-search"
+    "icon": "icon.png"
 }
