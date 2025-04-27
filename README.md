@@ -1,8 +1,7 @@
 <img width="1424" alt="cover" src="https://github.com/user-attachments/assets/35c0cc40-f028-4829-a7ab-af03c305c4d3" />
 
-**Compatible XF 2.x version(s):**	2.3
-
 **Additional requirement(s):**
+- XenForo 2.3.0 or newer!
 - XenForo Resource Manager 2.3.0 or newer
 - PHP 8.3.0+ (8.4+ recommended)
 - [XFA] RM Download from list - XF2 (Recommended)
